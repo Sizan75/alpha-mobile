@@ -1,15 +1,61 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from '../../context/AuthProvider';
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [signUpError, setSignUPError] = useState('')
+    const { createUser, updateUser } = useContext(AuthContext);
+    // const [createdUserEmail, setCreatedUserEmail]= useState('')
+    // const [token]= useToken(createdUserEmail)
+    const navigate = useNavigate();
+    // if(token){
+    //     navigate('/')
+    // }
+
+    const handleSignUp = (data) => {
+        setSignUPError('');
+        createUser(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                toast('User Created Successfully.')
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => {
+                        saveUser(data.name, data.email)              
+                     })
+                    .catch(err => console.log(err));
+            })
+            .catch(error => {
+                console.log(error)
+                setSignUPError(error.message)
+            });
+    }
+
+    const saveUser = (name, email) =>{
+        const user= {name, email}
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers:{
+                'content-type':'application/json'
+            },
+            body: JSON.stringify(user)
+        }).then(res => res.json())
+        .then(data=>{
+            // setCreatedUserEmail (email)
+            
+        })
+    }
+
     return (
         <div className='h-[800px] flex justify-center items-center'>
             <div className='w-96 p-7'>
                 <h2 className='text-xl text-center'>Sign Up</h2>
-                <form onSubmit={handleSubmit()}>
+                <form onSubmit={handleSubmit(handleSignUp)}>
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Name</span></label>
                         <input type="text" {...register("name", {
