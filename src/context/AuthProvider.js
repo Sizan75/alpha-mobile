@@ -16,9 +16,20 @@ const AuthProvider = ({children}) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     }
+    const updateUser = (userInfo) =>{
+        return updateProfile(auth.currentUser, userInfo);
+    }
+
+    const logOut = () =>{
+        setLoading(true);
+        return signOut(auth);
+    }
+
    const authInfo={
     createUser,
     signIn,
+    updateUser,
+    logOut,
    }
     return (
         <AuthContext.Provider value={authInfo}>
