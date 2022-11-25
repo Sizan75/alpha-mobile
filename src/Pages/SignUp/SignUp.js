@@ -120,7 +120,7 @@ const SignUp = () => {
                             <option value="buyer">Buyer</option>
                             <option value="seller">Seller</option>
                         </select>
-                        {errors.image && <p className='text-red-500'>{errors.image.message}</p>}
+                        {errors.role && <p className='text-red-500'>{errors.role.message}</p>}
                     </div>
                     <input className='btn btn-success w-full mt-4' value="Sign Up" type="submit" />
                     {signUpError && <p className='text-red-600'>{signUpError}</p>}

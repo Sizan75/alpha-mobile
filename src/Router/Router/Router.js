@@ -5,6 +5,7 @@ import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import SignUp from "../../Pages/SignUp/SignUp";
 import DisplayError from '../../Pages/Shared/DisplayError/DisplayError'
+import Dashboard from "../../Pages/Dashboard/Dashboard";
 export const router = createBrowserRouter([
 
     {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
             {
                 path: '/blogs',
                 element: <Blogs></Blogs>,
+            },
+            {
+                path: '/dashboard',
+                element: <Dashboard></Dashboard>,
             }
         ]
     }
