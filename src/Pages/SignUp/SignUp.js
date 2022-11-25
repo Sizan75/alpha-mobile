@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthProvider';
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -10,9 +11,11 @@ const SignUp = () => {
     // const [createdUserEmail, setCreatedUserEmail]= useState('')
     // const [token]= useToken(createdUserEmail)
     const navigate = useNavigate();
+   
     // if(token){
-    //     navigate('/')
+    //    
     // }
+ 
 
     const handleSignUp = (data) => {
         setSignUPError('');
@@ -21,13 +24,17 @@ const SignUp = () => {
                 const user = result.user;
                 console.log(user);
                 toast('User Created Successfully.')
+                
                 const userInfo = {
-                    displayName: data.name
+                    displayName: data.name,
+                  
+                    rolle: data.role
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        saveUser(data.name, data.email)              
-                     })
+                        saveUser(data.name, data.email,data.role)              
+                     
+                    })
                     .catch(err => console.log(err));
             })
             .catch(error => {
@@ -36,8 +43,11 @@ const SignUp = () => {
             });
     }
 
-    const saveUser = (name, email) =>{
-        const user= {name, email}
+    const saveUser = (name, email,role) =>{
+       
+        const user= {  displayName: name,
+            
+            rolle: role}
         fetch('http://localhost:5000/users', {
             method: 'POST',
             headers:{
@@ -47,6 +57,7 @@ const SignUp = () => {
         }).then(res => res.json())
         .then(data=>{
             // setCreatedUserEmail (email)
+            navigate('/')
             
         })
     }
@@ -65,7 +76,7 @@ const SignUp = () => {
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Image</span></label>
-                        <input type="file" {...register("image", {
+                        <input type="file" {...register("photoURL", {
                             required: "Image is Required"
                         })} className="file-input file-input-bordered file-input-success w-full max-w-xs" />
                         {errors.image && <p className='text-red-500'>{errors.image.message}</p>}
@@ -94,7 +105,7 @@ const SignUp = () => {
                             required: "role is Required"
                         })} 
                         className="select select-success w-full max-w-xs">
-                            <option value="user">User</option>
+                            <option value="buyer">Buyer</option>
                             <option value="seller">Seller</option>
                         </select>
                         {errors.image && <p className='text-red-500'>{errors.image.message}</p>}
