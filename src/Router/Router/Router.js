@@ -3,32 +3,33 @@ import Main from "../../layouts/Main/Main";
 import Blogs from "../../Pages/Blogs/Blogs";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
-import DisplayError from "../../Pages/Shared/DisplayError/DisplayError";
 import SignUp from "../../Pages/SignUp/SignUp";
-
+import DisplayError from '../../Pages/Shared/DisplayError/DisplayError'
 export const router = createBrowserRouter([
+
     {
         path:'/',
         element: <Main></Main>,
-        errorElement: <DisplayError></DisplayError>
+        errorElement: <DisplayError></DisplayError> ,
         children: [
+
             {
                 path: '/',
-                element: <Home></Home>
+                element: <Home></Home>,
             },
             {
-                path:'/signup',
-                element:<SignUp></SignUp>
+                path: '/signup',
+                element: <SignUp></SignUp>,
             }
             ,
             {
-                path:'/login',
-                element:<Login></Login>
+                path: '/login',
+                element: <Login></Login>,
             }
             ,
             {
-                path:'/blogs',
-                element:<Blogs></Blogs>
+                path: '/blogs',
+                element: <Blogs></Blogs>,
             }
         ]
     }
