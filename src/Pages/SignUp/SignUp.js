@@ -1,22 +1,20 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthProvider';
+import { GoogleAuthProvider } from 'firebase/auth';
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [signUpError, setSignUPError] = useState('')
-    const { createUser, updateUser } = useContext(AuthContext);
-    // const [createdUserEmail, setCreatedUserEmail]= useState('')
-    // const [token]= useToken(createdUserEmail)
-    const navigate = useNavigate();
+    const { createUser, updateUser,singInGoogle } = useContext(AuthContext);
+    const googleProvider = new GoogleAuthProvider()
+  
    
-    // if(token){
-    //    
-    // }
- 
-
+    const navigate = useNavigate()
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/'
     const handleSignUp = (data) => {
         setSignUPError('');
         createUser(data.email, data.password)
@@ -27,12 +25,13 @@ const SignUp = () => {
                 
                 const userInfo = {
                     displayName: data.name,
-                  
+                    photoURL: data.photoURL,
+                    email: data.email,
                     rolle: data.role
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        saveUser(data.name, data.email,data.role)              
+                        saveUser(data.name, data.photoURL,data.email ,data.role)              
                      
                     })
                     .catch(err => console.log(err));
@@ -43,10 +42,11 @@ const SignUp = () => {
             });
     }
 
-    const saveUser = (name, email,role) =>{
+    const saveUser = (name,photoURL, email,role) =>{
        
         const user= {  displayName: name,
-            
+            photoURL: photoURL,
+            email:email,
             rolle: role}
         fetch('http://localhost:5000/users', {
             method: 'POST',
@@ -60,6 +60,18 @@ const SignUp = () => {
             navigate('/')
             
         })
+    }
+
+    const handleGoogleSignIn = () => {
+        const role="buyer" 
+        singInGoogle(googleProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+                saveUser(user.displayName,user.photoURL, user.email, role)
+                navigate(from, { replace: true })
+            })
+            .catch(error => console.error(error))
     }
 
     return (
@@ -76,9 +88,9 @@ const SignUp = () => {
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label"> <span className="label-text">Image</span></label>
-                        <input type="file" {...register("photoURL", {
-                            required: "Image is Required"
-                        })} className="file-input file-input-bordered file-input-success w-full max-w-xs" />
+                        <input type="text" {...register("photoURL", {
+                            required: "Photo is Required"
+                        })} className="input input-bordered input-success w-full max-w-xs" />
                         {errors.image && <p className='text-red-500'>{errors.image.message}</p>}
                     </div>
                     <div className="form-control w-full max-w-xs">

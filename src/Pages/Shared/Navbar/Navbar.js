@@ -1,12 +1,21 @@
-import React, {  useState } from 'react';
+import React, {  useContext, useState } from 'react';
+import { FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../assets/logo132.png'
+import { AuthContext } from '../../../context/AuthProvider';
 
 
 const Navbar = () => {
     const [navbar, setNavbar] = useState(false);
 
-    
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+      logOut()
+        .then(() => { })
+        .catch(err => console.log(err));
+    }
+  
     return (
         <nav className="w-full bg-white shadow">
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
@@ -70,7 +79,43 @@ const Navbar = () => {
                                 <NavLink to="/blogs">Blog</NavLink>
                             </li>
 
+                            {
+                                user?.uid ?
+                                    <>
+                                        <li className="text-gray-600 font-semibold hover:text-sky-600">
+                                            <NavLink to="/myreview">My Review </NavLink>
+                                        </li>
+                                        <li className="text-gray-600 font-semibold hover:text-sky-600">
+                                            <NavLink to="/addfood">Add Food</NavLink>
+                                        </li>
 
+
+                                        {user?.photoURL ?
+                                            <div className="avatar">
+                                                <div className="w-12 rounded-full tooltip" data-tip={user?.displayName}>
+
+                                                    <img src={user?.photoURL} alt="" />
+                                                </div>
+
+                                            </div>
+                                            : <FaUser></FaUser>}
+
+
+                                        <li className="text-gray-800  font-semibold hover:text-purple-600">
+                                            <button onClick={handleLogOut}><NavLink to="/login"><FaSignOutAlt></FaSignOutAlt></NavLink></button>
+                                        </li>
+                                    </> :
+
+                                    <>
+
+                                        <li className="text-gray-600 font-semibold hover:text-purple-600">
+                                            <NavLink to="/login">Login</NavLink>
+                                        </li>
+                                        <li className="text-gray-800  font-semibold hover:text-purple-600">
+                                            <NavLink to="/signup">Sign Up</NavLink>
+                                        </li>
+                                    </>
+                            }
                           
                         </ul>
 
