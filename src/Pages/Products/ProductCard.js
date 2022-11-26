@@ -4,7 +4,7 @@ import  { AuthContext } from '../../context/AuthProvider';
 import { MdLocationOn } from "react-icons/md";
 const ProductCard = ({product}) => {
 const {productName, details, image, buyingPrice, sellingPrice,
-     yearOfUse,location, condition,categoryName, postTime, postDate, 
+     yearOfUse,location, condition,postTime, postDate, 
      phone, sellerName}= product
      const {user}= useContext(AuthContext)
     return (
