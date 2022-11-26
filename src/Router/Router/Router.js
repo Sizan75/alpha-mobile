@@ -6,6 +6,7 @@ import Login from "../../Pages/Login/Login";
 import SignUp from "../../Pages/SignUp/SignUp";
 import DisplayError from '../../Pages/Shared/DisplayError/DisplayError'
 import Dashboard from "../../Pages/Dashboard/Dashboard";
+import Products from "../../Pages/Products/Products";
 export const router = createBrowserRouter([
 
     {
@@ -31,6 +32,11 @@ export const router = createBrowserRouter([
             {
                 path: '/blogs',
                 element: <Blogs></Blogs>,
+            },
+            {
+                path:'/category/:id',
+                element: <Products></Products>,
+                loader: ({params})=> fetch(`http://localhost:5000/category/${params.id}`)
             },
             {
                 path: '/dashboard',

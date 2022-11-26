@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useState } from 'react';
+import React, {  useState } from 'react';
 import toast from 'react-hot-toast';
-import { AuthContext } from '../../../context/AuthProvider';
 import ConfirmationModal from '../../Shared/ConfirmationModal/ConfirmationModal';
 
 const AllSellers = () => {
