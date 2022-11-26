@@ -5,7 +5,7 @@ import { AuthContext } from '../../../context/AuthProvider';
 import ConfirmationModal from '../../Shared/ConfirmationModal/ConfirmationModal';
 
 const AllSellers = () => {
-    const { user } = useContext(AuthContext)
+ 
     const [deletingSellers, setDeletingSellers]= useState(null)
 
     const closeModal = () =>{
@@ -43,7 +43,7 @@ const AllSellers = () => {
    
     return (
         <div>
-            <h3 className='text-3xl mb-5'>My Products</h3>
+            <h3 className='text-3xl mb-5'>All Sellers</h3>
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>
@@ -87,7 +87,7 @@ const AllSellers = () => {
                 deletingSellers && 
                 <ConfirmationModal
                 title={'Are you sure you want to delete'}
-                message={`If you delete ${ deletingSellers.productName} can not be undone`}
+                message={`If you delete ${ deletingSellers.displayName} can not be undone`}
                 closeModal= {closeModal}
                 successAction= {handleSellerDelete}
                 successButton={'Delete'}
