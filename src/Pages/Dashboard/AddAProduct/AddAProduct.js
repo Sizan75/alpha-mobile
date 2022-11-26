@@ -168,8 +168,9 @@ const AddAProduct = () => {
                         </select>
                         {errors.condition && <p className='text-red-500'>{errors.condition.message}</p>}
                     </div>
-            <input className='btn btn-success w-full mt-4' value="Add Product" type="submit" />
-
+                   
+            <input className='btn btn-success  w-full mt-4' value="Add Product" type="submit" />
+          
         </form>
 
 
