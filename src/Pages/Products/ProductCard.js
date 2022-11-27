@@ -2,16 +2,19 @@ import React, { useContext } from 'react';
 import { FcApproval, FcPhone } from 'react-icons/fc';
 import  { AuthContext } from '../../context/AuthProvider';
 import { MdLocationOn } from "react-icons/md";
-const ProductCard = ({product}) => {
+
+const ProductCard = ({mobileProduct, setProductBooking}) => {
+    
 const {productName, details, image, buyingPrice, sellingPrice,
      yearOfUse,location, condition,postTime, postDate, 
-     phone, sellerName, status}= product
+     phone, sellerName, status}= mobileProduct
      const {user}= useContext(AuthContext)
+     
     return (
    <div className=''>  
 <div className="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100">
 	<div className="flex space-x-4">
-		<img alt="" src={user.photoURL} className="object-cover w-12 h-12 rounded-full shadow dark:bg-gray-500" />
+		<img alt="" src={user?.photoURL} className="object-cover w-12 h-12 rounded-full shadow dark:bg-gray-500" />
 		<div className="flex flex-col space-y-1">
 			<div className="flex">
             <h2 className="text-sm font-semibold">{sellerName}</h2>
@@ -55,8 +58,13 @@ const {productName, details, image, buyingPrice, sellingPrice,
         <p>{sellingPrice}</p>
         </div>
 	</div>
-    <button type="button" className="flex items-center justify-center w-full p-3 font-semibold tracking-wide rounded-md  ">Book Now</button>
-</div>
+   
+    <label htmlFor="booking-modal" 
+     className="btn btn-success " 
+     onClick={ () => setProductBooking(mobileProduct)}
+     >Book Now</label>
+     </div>
+   
 </div>
     );
 };

@@ -14,12 +14,19 @@ const AdvertizedProduct = () => {
     })
     return (
         <div>
+           {  advertises.length > 0 &&
+           <>  
+           <h2 className='text-2xl text-green-600 font-bold'>Advertised Product</h2>
+        <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5'>
           {
             advertises.map(advertise =><AdvertizedProductCard
             key={advertise._id}
             advertise={advertise}
             ></AdvertizedProductCard>)
           }
+        </div>
+    </>
+        }
         </div>
     );
 };
