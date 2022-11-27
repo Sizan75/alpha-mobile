@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { FcApproval, FcContacts, FcPhone } from 'react-icons/fc';
+import { FcApproval, FcPhone } from 'react-icons/fc';
 import  { AuthContext } from '../../context/AuthProvider';
 import { MdLocationOn } from "react-icons/md";
 const ProductCard = ({product}) => {
 const {productName, details, image, buyingPrice, sellingPrice,
      yearOfUse,location, condition,postTime, postDate, 
-     phone, sellerName}= product
+     phone, sellerName, status}= product
      const {user}= useContext(AuthContext)
     return (
    <div className=''>  
@@ -13,8 +13,11 @@ const {productName, details, image, buyingPrice, sellingPrice,
 	<div className="flex space-x-4">
 		<img alt="" src={user.photoURL} className="object-cover w-12 h-12 rounded-full shadow dark:bg-gray-500" />
 		<div className="flex flex-col space-y-1">
-			<h2 className="text-sm font-semibold">{sellerName}<FcApproval></FcApproval></h2>
-			<span className="text-xs dark:text-gray-400">{postDate}  {postTime}</span>
+			<div className="flex">
+            <h2 className="text-sm font-semibold">{sellerName}</h2>
+			{status === 'Verified' && <p className='pl-2'><FcApproval></FcApproval></p>}
+            </div>
+            <span className="text-xs dark:text-gray-400">{postDate}  {postTime}</span>
 		</div>
 	</div>
 	<div>

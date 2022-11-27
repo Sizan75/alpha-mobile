@@ -48,7 +48,7 @@ const AddAProduct = () => {
                 postTime: time,
                 postDate: currentDate,
                 sellerName: user.displayName,
-                sellerEmail: user.email
+                email: user.email
 
             }
             fetch('http://localhost:5000/products',{

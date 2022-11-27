@@ -19,6 +19,19 @@ const AllSellers = () => {
             return data
         }
     })
+    const verifySeller = email =>{
+        fetch(`http://localhost:5000/seller?email=${email}`,{
+                method:"PUT"
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                if(data.modifiedCount > 0){
+                    toast.success('Seller verified successfully')
+                    refetch()
+                }
+            })
+        
+    }
 
     const handleSellerDelete = seller =>{
         fetch(`http://localhost:5000/users/${seller._id}`,{
@@ -51,7 +64,8 @@ const AllSellers = () => {
                             <th>Image</th>
                             <th>Name</th>
                             <th>Email</th>
-                            
+                                                      
+                            <th>Action</th>
                             <th>Action</th>
                             
                         </tr>
@@ -72,11 +86,20 @@ const AllSellers = () => {
                                 <td>{seller.email}</td>
                                 
                                 <td>
+                               
                                 <label onClick={()=> setDeletingSellers(seller)} htmlFor="confirmation-modal" className="btn btn-sm btn-error text-white">Delete</label>
-                                   
-                                    </td>
                                 
-                            </tr>)
+                                </td>
+                     <td>
+                     {
+                        seller?.status !== 'Verified' ?
+                            <button onClick={() => verifySeller(seller.email)} className='bg-blue-600 btn btn-sm'>Verify</button>
+                            :
+                            <button className='btn btn-xs bg-green-600 border-0'>Verified</button>
+                    }
+                        </td> 
+
+                        </tr>)
                         }
 
                     </tbody>

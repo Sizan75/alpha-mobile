@@ -83,11 +83,9 @@ const Navbar = () => {
                                 user?.uid ?
                                     <>
                                         <li className="text-gray-600 font-semibold hover:text-sky-600">
-                                            <NavLink to="/myreview">My Review </NavLink>
+                                            <NavLink to="/dashboard">Dashboard</NavLink>
                                         </li>
-                                        <li className="text-gray-600 font-semibold hover:text-sky-600">
-                                            <NavLink to="/addfood">Add Food</NavLink>
-                                        </li>
+
 
 
                                         {user?.photoURL ?
