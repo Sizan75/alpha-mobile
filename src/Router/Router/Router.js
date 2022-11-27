@@ -5,7 +5,6 @@ import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import SignUp from "../../Pages/SignUp/SignUp";
 import DisplayError from '../../Pages/Shared/DisplayError/DisplayError'
-import Dashboard from "../../Pages/Dashboard/Dashboard";
 import Products from "../../Pages/Products/Products";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import AdminRoute from "../AdminRoute/AdminRoute";
