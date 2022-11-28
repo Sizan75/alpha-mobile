@@ -5,12 +5,13 @@ import { AuthContext } from '../../../context/AuthProvider';
 
 
 import Loading from '../../Shared/Loading/Loading'
+import { Link } from 'react-router-dom';
 
 const MyOrders = () => {
     const { user } = useContext(AuthContext)
     // const [deletingProduct, setDeletingProduct]= useState(null)
 
-      
+
     const url = `http://localhost:5000/myorders?email=${user?.email}`
     const { data: myorders = [] } = useQuery({
         queryKey: ['myorders', user?.email],
@@ -37,7 +38,7 @@ const MyOrders = () => {
 
     //     })
     //     }
-   
+
 
     // const advertiseProduct = id =>{
     //     fetch(`http://localhost:5000/myorders/${id}`,{
@@ -50,7 +51,7 @@ const MyOrders = () => {
     //                 refetch()
     //             }
     //         })
-        
+
     // // }
     // if(isLoading){
     //     return <Loading></Loading>
@@ -66,9 +67,9 @@ const MyOrders = () => {
                             <th>Image</th>
                             <th>Product Name</th>
                             <th>Buying Price</th>
-                            
+
                             <th>Payment</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
@@ -85,19 +86,29 @@ const MyOrders = () => {
 
                                 <td>{order.productName}</td>
                                 <td>{order.sellingPrice}</td>
-                                
-                            
+
+
                                 <td>
-                                <button className='btn btn-primary'>Pay Now</button>
+                                    {/* <button className='btn btn-primary'>Pay Now</button> */}
+                                    {
+                                        order.sellingPrice && !order.paid &&
+                                        <Link to={`/dashboard/payment/${order._id}`}>
+                                            <button className='btn btn-primary btn-sm px-6 '>Pay</button>
+                                        </Link>
+                                    }
+
+                                    {
+                                        order.sellingPrice && order.paid && <span className='font-bold bg-green-600 rounded-md px-6 py-1 text-white'>Paid</span>
+                                    }
                                 </td>
-    
+
                             </tr>)
                         }
 
                     </tbody>
                 </table>
             </div>
-          </div>
+        </div>
     );
 };
 
