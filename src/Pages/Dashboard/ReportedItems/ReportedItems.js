@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+
 
 const ReportedItems = () => {
 
-    const url='http://localhost:5000/reports'
+    const url='https://alpha-mobile-server.vercel.app//reports'
   
-    const { data: reports = [], refetch,isLoading } = useQuery({
+    const { data: reports = [] } = useQuery({
         queryKey: ['reports', ],
         queryFn: async () => {
             const res = await fetch(url)

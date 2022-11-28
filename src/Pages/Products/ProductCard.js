@@ -18,7 +18,7 @@ const handleReportToAdmin = () =>{
         email,
         image,
     }
-    fetch('http://localhost:5000/reports',{
+    fetch('https://alpha-mobile-server.vercel.app//reports',{
         method: "POST",
         headers:{
             'content-type':'application/json'

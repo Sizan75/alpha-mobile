@@ -84,7 +84,7 @@ const BookingModal = ({ setProductBooking, productBooking }) => {
                         <input name="phone" type="text" placeholder="Phone Number" className="input w-full input-bordered" />
                         <input name="meetlocation" type="text" placeholder="Meet Up Location" className="input w-full input-bordered" />
                         <br />
-                        <input className='btn btn-accent w-full' type="submit" value="Submit" />
+                        <input className='btn btn-success w-full' type="submit" value="Submit" />
                     </form>
                 </div>
             </div>
