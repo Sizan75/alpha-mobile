@@ -6,14 +6,15 @@ import { AuthContext } from '../../../context/AuthProvider';
 
 import Loading from '../../Shared/Loading/Loading'
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const MyOrders = () => {
     const { user } = useContext(AuthContext)
     // const [deletingProduct, setDeletingProduct]= useState(null)
 
 
-    const url = `http://localhost:5000/myorders?email=${user?.email}`
-    const { data: myorders = [] } = useQuery({
+    const url = `https://alpha-mobile-server.vercel.app/myorders?email=${user?.email}`
+    const { data: myorders = [],refetch,isLoading } = useQuery({
         queryKey: ['myorders', user?.email],
         queryFn: async () => {
             const res = await fetch(url)
@@ -22,40 +23,13 @@ const MyOrders = () => {
         }
     })
 
-    // const handleProductDelete = product =>{
-    //     fetch(`http://localhost:5000/MyOrders/${product._id}`,{
-    //         method: 'DELETE',
-    //         // headers:{
-    //         //   authorization: `bearer ${localStorage.getItem('accessToken')}`
-    //         //     }
-    //     })
-    //     .then(res=> res.json())
-    //     .then(data=>{
-    //         if(data.deletedCount >0){
-    //             refetch()
-    //         toast.success(`Product ${product.productName} deleted Successfully`)
-    //         }
-
-    //     })
-    //     }
+    
 
 
-    // const advertiseProduct = id =>{
-    //     fetch(`http://localhost:5000/myorders/${id}`,{
-    //             method:"PUT"
-    //         })
-    //         .then(res=>res.json())
-    //         .then(data=>{
-    //             if(data.modifiedCount > 0){
-    //                 toast.success('Advertized added successfully')
-    //                 refetch()
-    //             }
-    //         })
-
-    // // }
-    // if(isLoading){
-    //     return <Loading></Loading>
-    // }
+    
+    if(isLoading){
+        return <Loading></Loading>
+    }
     return (
         <div>
             <h3 className='text-3xl mb-5'>My Products</h3>
@@ -89,17 +63,10 @@ const MyOrders = () => {
 
 
                                 <td>
-                                    {/* <button className='btn btn-primary'>Pay Now</button> */}
-                                    {
-                                        order.sellingPrice && !order.paid &&
-                                        <Link to={`/dashboard/payment/${order._id}`}>
-                                            <button className='btn btn-primary btn-sm px-6 '>Pay</button>
-                                        </Link>
-                                    }
+                                    <button className='btn btn-primary'>Pay Now</button>
+                                    
 
-                                    {
-                                        order.sellingPrice && order.paid && <span className='font-bold bg-green-600 rounded-md px-6 py-1 text-white'>Paid</span>
-                                    }
+                                    
                                 </td>
 
                             </tr>)

@@ -13,22 +13,26 @@ const MyProducts = () => {
     const closeModal = () =>{
         setDeletingProduct(null)
     }   
-    const url = `http://localhost:5000/myproducts?email=${user?.email}`
+    const url = `https://alpha-mobile-server.vercel.app/myproducts?email=${user?.email}`
     const { data: myproducts = [], refetch, isLoading } = useQuery({
         queryKey: ['myproducts', user?.email],
         queryFn: async () => {
-            const res = await fetch(url)
+            const res = await fetch(url,{
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
             const data = await res.json()
             return data
         }
     })
 
     const handleProductDelete = product =>{
-        fetch(`http://localhost:5000/myproducts/${product._id}`,{
+        fetch(`https://alpha-mobile-server.vercel.app/myproducts/${product._id}`,{
             method: 'DELETE',
-            // headers:{
-            //   authorization: `bearer ${localStorage.getItem('accessToken')}`
-            //     }
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
         })
         .then(res=> res.json())
         .then(data=>{
@@ -42,7 +46,7 @@ const MyProducts = () => {
    
 
     const advertiseProduct = id =>{
-        fetch(`http://localhost:5000/myproducts/${id}`,{
+        fetch(`https://alpha-mobile-server.vercel.app/myproducts/${id}`,{
                 method:"PUT"
             })
             .then(res=>res.json())

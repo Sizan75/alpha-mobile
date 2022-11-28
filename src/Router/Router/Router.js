@@ -17,7 +17,7 @@ import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
 import SellerRoute from "../SellerRoute/SellerRoute";
 import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
 import AddAProduct from "../../Pages/Dashboard/AddAProduct/AddAProduct";
-import Payment from "../../Pages/Dashboard/MyOrders/Payment";
+
 export const router = createBrowserRouter([
 
     {
@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
             {
                 path:'/category/:id',
                 element: <Products></Products>,
-                loader: ({params})=> fetch(`http://localhost:5000/category/${params.id}`)
+                loader: ({params})=> fetch(`https://alpha-mobile-server.vercel.app/category/${params.id}`)
             },
             
         ]
@@ -81,11 +81,7 @@ export const router = createBrowserRouter([
                 path: '/dashboard/addaproduct',
                 element: <SellerRoute><AddAProduct></AddAProduct></SellerRoute>
             },
-            {
-                path: '/dashboard/payment/:id',
-                element: <BuyerRoute><Payment></Payment></BuyerRoute>,
-                loader: ({params}) => fetch(`http://localhost:5000/orders/${params.id}`)
-            }
+            
         ]
     }
 ])

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const MobileCategory = () => {
     const {data:mobileCategory=[], isLoading}= useQuery({
         queryKey:['mobileCategory'],
-        queryFn: ()=> fetch('http://localhost:5000/category')
+        queryFn: ()=> fetch('https://alpha-mobile-server.vercel.app/category')
         .then(res => res.json())
         
     })

@@ -10,17 +10,21 @@ const AllSellers = () => {
     const closeModal = () =>{
         setDeletingSellers(null)
     }   
-    const url = `http://localhost:5000/users?role=seller`
+    const url = `https://alpha-mobile-server.vercel.app/users?role=seller`
     const { data: allSellers = [], refetch,isLoading } = useQuery({
         queryKey: ['allSellers', "seller"],
         queryFn: async () => {
-            const res = await fetch(url)
+            const res = await fetch(url,{
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
             const data = await res.json()
             return data
         }
     })
     const verifySeller = email =>{
-        fetch(`http://localhost:5000/seller?email=${email}`,{
+        fetch(`https://alpha-mobile-server.vercel.app/seller?email=${email}`,{
                 method:"PUT"
             })
             .then(res=>res.json())
@@ -34,7 +38,7 @@ const AllSellers = () => {
     }
 
     const handleSellerDelete = seller =>{
-        fetch(`http://localhost:5000/users/${seller._id}`,{
+        fetch(`https://alpha-mobile-server.vercel.app/users/${seller._id}`,{
             method: 'DELETE',
             // headers:{
             //   authorization: `bearer ${localStorage.getItem('accessToken')}`

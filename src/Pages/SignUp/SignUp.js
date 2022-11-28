@@ -5,16 +5,21 @@ import { FcGoogle } from "react-icons/fc";
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthProvider';
 import { GoogleAuthProvider } from 'firebase/auth';
+import useToken from '../../hooks/useToken';
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [signUpError, setSignUPError] = useState('')
     const { createUser, updateUser,singInGoogle } = useContext(AuthContext);
     const googleProvider = new GoogleAuthProvider()
-  
-   
+    const [createdUserEmail, setCreatedUserEmail]= useState('')
+    const [token]= useToken(createdUserEmail)
     const navigate = useNavigate()
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'
+
+    if(token){
+        navigate('/')
+    }
     const handleSignUp = (data) => {
         setSignUPError('');
         createUser(data.email, data.password)
@@ -48,7 +53,7 @@ const SignUp = () => {
             photoURL: photoURL,
             email:email,
             role: role}
-        fetch('http://localhost:5000/users', {
+        fetch('https://alpha-mobile-server.vercel.app/users', {
             method: 'POST',
             headers:{
                 'content-type':'application/json'
@@ -56,8 +61,8 @@ const SignUp = () => {
             body: JSON.stringify(user)
         }).then(res => res.json())
         .then(data=>{
-            // setCreatedUserEmail (email)
-            navigate('/')
+            setCreatedUserEmail(email)
+           
             
         })
     }
@@ -69,7 +74,7 @@ const SignUp = () => {
                 const user = result.user;
                 console.log(user)
                 saveUser(user.displayName,user.photoURL, user.email, role)
-                navigate(from, { replace: true })
+                
             })
             .catch(error => console.error(error))
     }
@@ -127,7 +132,7 @@ const SignUp = () => {
                 </form>
                 <p>Already have an account <Link className='text-secondary' to="/login">Please Login</Link></p>
                 <div className="divider">OR</div>
-                <button className="btn btn-outline btn-success w-full mt-1 text-dark"><FcGoogle></FcGoogle>  Google Sign In</button>
+                <button  onClick={handleGoogleSignIn} className="btn btn-outline btn-success w-full mt-1 text-dark"><FcGoogle></FcGoogle>  Google Sign In</button>
 
             </div>
         </div>

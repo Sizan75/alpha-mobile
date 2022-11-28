@@ -32,7 +32,7 @@ const BookingModal = ({ setProductBooking, productBooking }) => {
             sellerName
         }
        
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://alpha-mobile-server.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -52,7 +52,7 @@ const BookingModal = ({ setProductBooking, productBooking }) => {
                 }
             })
 
-            fetch(`http://localhost:5000/bookedProducts/${_id}`,{
+            fetch(`https://alpha-mobile-server.vercel.app/bookedProducts/${_id}`,{
             method:"PUT",
             headers:{
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

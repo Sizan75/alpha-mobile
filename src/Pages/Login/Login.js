@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
+import useToken from '../../hooks/useToken';
 
 
 
@@ -12,15 +13,16 @@ const Login = () => {
     const { signIn,singInGoogle, user } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
+    const [token]= useToken(loginUserEmail)
     const googleProvider = new GoogleAuthProvider()
     const location = useLocation();
     const navigate = useNavigate();
 
     const from = location.state?.from?.pathname || '/';
 
-    // if (token) {
-    //     navigate(from, { replace: true });
-    // }
+    if (token) {
+        navigate(from, { replace: true });
+    }
 
     const handleLogin = data => {
         console.log(data);
@@ -30,20 +32,20 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
                 setLoginUserEmail(data.email);
-                navigate(from, { replace: true });
             })
             .catch(error => {
                 console.log(error.message)
                 setLoginError(error.message);
             });
     }
+
     const saveUser = (name,photoURL, email,role) =>{
        
         const user= {  displayName: name,
             photoURL: photoURL,
             email:email,
             rolle: role}
-        fetch('http://localhost:5000/users', {
+        fetch('https://alpha-mobile-server.vercel.app/users', {
             method: 'POST',
             headers:{
                 'content-type':'application/json'
@@ -61,7 +63,7 @@ const Login = () => {
                 const user = result.user;
                 console.log(user)
                 saveUser(user.displayName,user.photoURL, user.email, role)
-                navigate(from, { replace: true })
+                setLoginUserEmail(user?.email);
             })
             .catch(error => console.error(error))
     }
@@ -91,7 +93,7 @@ const Login = () => {
                         <label className="label"> <span className="label-text">Forget Password?</span></label>
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
-                    <input className='btn btn-accent w-full' value="Login" type="submit" />
+                    <input className='btn btn-success w-full' value="Login" type="submit" />
                     <div>
                         {loginError && <p className='text-red-600'>{loginError}</p>}
                     </div>

@@ -10,18 +10,22 @@ const AllBuyers = () => {
     const closeModal = () =>{
         setdeletingBuyers(null)
     }   
-    const url = `http://localhost:5000/users?role=buyer`
+    const url = `https://alpha-mobile-server.vercel.app/users?role=buyer`
     const { data: allBuyers = [], refetch,isLoading } = useQuery({
         queryKey: ['allBuyers', "buyer"],
         queryFn: async () => {
-            const res = await fetch(url)
+            const res = await fetch(url,{
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
             const data = await res.json()
             return data
         }
     })
 
     const handleBuyerDelete = buyer =>{
-        fetch(`http://localhost:5000/users/${buyer._id}`,{
+        fetch(`https://alpha-mobile-server.vercel.app/users/${buyer._id}`,{
             method: 'DELETE',
             // headers:{
             //   authorization: `bearer ${localStorage.getItem('accessToken')}`

@@ -3,7 +3,7 @@ import React from 'react';
 import AdvertizedProductCard from './AdvertizedProductCard';
 
 const AdvertizedProduct = () => {
-    const url= `http://localhost:5000/advertise?advertiseStatus=advertised`
+    const url= `https://alpha-mobile-server.vercel.app/advertise?advertiseStatus=advertised`
     const { data: advertises = [], refetch,isLoading } = useQuery({
         queryKey: ['advertises', "advertiseStatus"],
         queryFn: async () => {

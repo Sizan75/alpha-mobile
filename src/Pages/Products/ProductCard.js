@@ -2,14 +2,37 @@ import React, { useContext } from 'react';
 import { FcApproval, FcPhone } from 'react-icons/fc';
 import  { AuthContext } from '../../context/AuthProvider';
 import { MdLocationOn } from "react-icons/md";
+import toast from 'react-hot-toast';
 
 const ProductCard = ({mobileProduct, setProductBooking}) => {
     
 const {productName, details, image, buyingPrice, sellingPrice,
      yearOfUse,location, condition,postTime, postDate, 
-     phone, sellerName, status}= mobileProduct
+     phone, sellerName, status,email}= mobileProduct
      const {user}= useContext(AuthContext)
      
+const handleReportToAdmin = () =>{
+    const report={
+        productName,
+        sellerName,
+        email,
+        image,
+    }
+    fetch('http://localhost:5000/reports',{
+        method: "POST",
+        headers:{
+            'content-type':'application/json'
+        },
+        body: JSON.stringify(report)
+    })
+    .then(res=>res.json())
+    .then(data =>{
+        if(data.acknowledged){
+            toast.success("Report submited")
+        }
+    })
+}
+
     return (
    <div className=''>  
 <div className="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-900 dark:text-gray-100">
@@ -64,7 +87,7 @@ const {productName, details, image, buyingPrice, sellingPrice,
      onClick={ () => setProductBooking(mobileProduct)}
      >Book Now</label>
      </div>
-   
+   <button onClick={handleReportToAdmin}>Report to Admin</button>
 </div>
     );
 };
