@@ -13,6 +13,8 @@ const CheckOutForm = ({booking}) => {
     const [paymentError, setPaymentError]= useState(' ')
     const {productName, sellingPrice, _id, buyerName,userEmail}= booking
 
+    const price1= parseInt(sellingPrice)
+
     useEffect(() => {
 
         fetch('http://localhost:5000/create-payment-intent', {
@@ -81,7 +83,7 @@ const CheckOutForm = ({booking}) => {
         if(paymentIntent.status === 'succeeded'){
             const booking={
                 email:userEmail,
-                price:sellingPrice,
+                price:price1,
                 bookingId: _id
             }
             fetch('http://localhost:5000/payments',{
