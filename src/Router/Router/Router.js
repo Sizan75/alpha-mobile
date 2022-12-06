@@ -17,6 +17,7 @@ import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
 import SellerRoute from "../SellerRoute/SellerRoute";
 import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
 import AddAProduct from "../../Pages/Dashboard/AddAProduct/AddAProduct";
+import Payment from "../../Pages/Dashboard/Payment/Payment";
 
 export const router = createBrowserRouter([
 
@@ -72,6 +73,11 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/myorders',
                 element: <BuyerRoute><MyOrders></MyOrders></BuyerRoute>
+            },
+            {
+                path: '/dashboard/payment/:id',
+                element: <BuyerRoute><Payment></Payment></BuyerRoute>,
+                loader: ({params}) => fetch(`http://localhost:5000/bookings/${params.id}`)
             },
             {
                 path: '/dashboard/myproducts',

@@ -14,7 +14,7 @@ const MyOrders = () => {
 
 
     const url = `https://alpha-mobile-server.vercel.app/myorders?email=${user?.email}`
-    const { data: myorders = [],refetch,isLoading } = useQuery({
+    const { data: myorders = [], refetch, isLoading } = useQuery({
         queryKey: ['myorders', user?.email],
         queryFn: async () => {
             const res = await fetch(url)
@@ -23,11 +23,11 @@ const MyOrders = () => {
         }
     })
 
-    
 
 
-    
-    if(isLoading){
+
+
+    if (isLoading) {
         return <Loading></Loading>
     }
     return (
@@ -60,13 +60,19 @@ const MyOrders = () => {
 
                                 <td>{order.productName}</td>
                                 <td>{order.sellingPrice}</td>
-
-
                                 <td>
-                                    <button className='btn btn-primary'>Pay Now</button>
-                                    
-
-                                    
+                                    {
+                                        order.sellingPrice && !order.paid && <Link
+                                            to={`/dashboard/payment/${order._id}`}
+                                        >
+                                            <button
+                                                className='btn btn-primary btn-sm'
+                                            >Pay</button>
+                                        </Link>
+                                    }
+                                    {
+                                        order?.sellingPrice && order.paid && <span className='text-green-500'>Paid</span>
+                                    }
                                 </td>
 
                             </tr>)
