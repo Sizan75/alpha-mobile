@@ -20,6 +20,8 @@
     * There is allbuyer and allseller page that only admin can see.Admin can delete a buyer or a seller. 
 
     * My products page is only for sellers. They can delete any items and advertise product for advertise.
+    
+    * Buyer can pay using stripe payment.
 
     * There is a blog page user can see some question answer there.  
 
